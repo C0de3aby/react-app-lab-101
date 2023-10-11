@@ -24,15 +24,14 @@ const WeatherPage: React.FC<any> = () => {
     try {
       const response = await axios.get(apiUrl);
       setWeatherData(response.data);
-      // หลังจากที่ setWeatherData สำเร็จ คุณสามารถทำสิ่งอื่น ๆ ที่คุณต้องการทำ
-      console.log(response.data);
+      //console.log(response.data);
     } catch (error) {
-      console.error('Error fetching weather data: ', error);
+      console.log(error);
     }
   };
 
   React.useEffect(() => {
-    if (weatherData === null) {
+    if (!weatherData) {
       fetchWeatherData();
     }
   }, [weatherData]); // weatherData
@@ -74,47 +73,93 @@ const WeatherPage: React.FC<any> = () => {
                 alignItems: 'center',
               }}
             >
-              <Stack
-                sx={{
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  minWidth: 400,
-                }}
-              >
-                <Typography
+              {weatherData ? (
+                <Stack
                   sx={{
-                    fontSize: 40,
-                    fontWeight: 'Bold',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    minWidth: 400,
                   }}
-                  color="GrayText"
                 >
-                  {weatherData?.name}
-                </Typography>
-                <br />
-                <Avatar
-                  sx={{
-                    bgcolor: red[400],
-                    width: '10vh',
-                    height: '10vh',
-                  }}
-                  src={
-                    weatherData
-                      ? `https://openweathermap.org/img/wn/${weatherData?.weather.map(
-                          (weather) => weather.icon,
-                        )}@2x.png`
-                      : ''
-                  }
-                />
-                <br />
-                <Typography
-                  sx={{
-                    fontSize: 28,
-                    fontWeight: 'Normal',
-                  }}
-                  color="GrayText"
-                >
-                  {weatherData?.weather.map((weather) => weather.main)}
-                </Typography>
+                  <Typography
+                    sx={{
+                      fontSize: 40,
+                      fontWeight: 'Bold',
+                    }}
+                    color="GrayText"
+                  >
+                    {weatherData.name}
+                  </Typography>
+                  <br />
+                  <Avatar
+                    sx={{
+                      bgcolor: red[400],
+                      width: '10vh',
+                      height: '10vh',
+                    }}
+                    src={`https://openweathermap.org/img/wn/${weatherData.weather.map(
+                      (weather) => weather.icon,
+                    )}@2x.png`}
+                  />
+                  <br />
+                  <Typography
+                    sx={{
+                      fontSize: 28,
+                      fontWeight: 'Normal',
+                    }}
+                    color="GrayText"
+                  >
+                    {weatherData.weather.map((weather) => weather.main)}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontSize: 20,
+                      fontWeight: 'Normal',
+                    }}
+                    color="GrayText"
+                  >
+                    {weatherData.weather.map((weather) => weather.description)}
+                  </Typography>
+                  <br />
+                  <Typography
+                    sx={{
+                      fontSize: 20,
+                      fontWeight: 'Normal',
+                    }}
+                    color="GrayText"
+                  >
+                    Current {weatherData.main.temp} °C
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontSize: 20,
+                      fontWeight: 'Normal',
+                    }}
+                    color="GrayText"
+                  >
+                    Min {weatherData.main.temp_min} °C
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontSize: 20,
+                      fontWeight: 'Normal',
+                    }}
+                    color="GrayText"
+                  >
+                    Max {weatherData.main.temp_max} °C
+                  </Typography>
+                  <br />
+                  <br />
+                  <Button
+                    variant="contained"
+                    onClick={() => {
+                      fetchWeatherData();
+                    }}
+                  >
+                    Refresh
+                  </Button>
+                </Stack>
+              ) : (
                 <Typography
                   sx={{
                     fontSize: 20,
@@ -122,47 +167,9 @@ const WeatherPage: React.FC<any> = () => {
                   }}
                   color="GrayText"
                 >
-                  {weatherData?.weather.map((weather) => weather.description)}
+                  Loading...
                 </Typography>
-                <br />
-                <Typography
-                  sx={{
-                    fontSize: 20,
-                    fontWeight: 'Normal',
-                  }}
-                  color="GrayText"
-                >
-                  Current {weatherData?.main.temp} °C
-                </Typography>
-                <Typography
-                  sx={{
-                    fontSize: 20,
-                    fontWeight: 'Normal',
-                  }}
-                  color="GrayText"
-                >
-                  Min {weatherData?.main.temp_min} °C
-                </Typography>
-                <Typography
-                  sx={{
-                    fontSize: 20,
-                    fontWeight: 'Normal',
-                  }}
-                  color="GrayText"
-                >
-                  Max {weatherData?.main.temp_max} °C
-                </Typography>
-                <br />
-                <br />
-                <Button
-                  variant="contained"
-                  onClick={() => {
-                    fetchWeatherData();
-                  }}
-                >
-                  Refresh
-                </Button>
-              </Stack>
+              )}
             </CardContent>
           </Card>
         </Box>
