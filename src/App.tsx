@@ -10,6 +10,8 @@ import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import AirIcon from '@mui/icons-material/Air';
+import DateRangeIcon from '@mui/icons-material/DateRange';
+import ViewQuiltIcon from '@mui/icons-material/ViewQuilt';
 import AccessibilityNewIcon from '@mui/icons-material/AccessibilityNew';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
@@ -21,6 +23,8 @@ import Avatar from '@mui/material/Avatar';
 
 import WeatherPage from './components/pages/WeatherPage/WeatherPage';
 import BmiPage from './components/pages/BmiPage/BmiPage';
+import GridLearnPage from './components/pages/GridLearnPage';
+import DateTimePage from './components/pages/DateTimePage';
 
 const drawerWidth = 240;
 
@@ -120,8 +124,8 @@ function App({}: Props) {
                 </IconButton>
               </Avatar>
             </DrawerHeader>
-            <Divider />
             <List>
+              <Divider />
               <ListItem disablePadding>
                 <ListItemButton component={MyNavLink} to="/" activeClassName="Mui-selected" exact>
                   <ListItemIcon sx={{ marginLeft: 0.4 }}>
@@ -130,6 +134,7 @@ function App({}: Props) {
                   <ListItemText primary={'Weather'} />
                 </ListItemButton>
               </ListItem>
+              <Divider />
               <ListItem disablePadding>
                 <ListItemButton
                   component={MyNavLink}
@@ -143,11 +148,42 @@ function App({}: Props) {
                   <ListItemText primary={'BIM'} />
                 </ListItemButton>
               </ListItem>
+              <Divider />
+              <ListItem disablePadding>
+                <ListItemButton
+                  component={MyNavLink}
+                  to="/grid-learn"
+                  activeClassName="Mui-selected"
+                  exact
+                >
+                  <ListItemIcon sx={{ marginLeft: 0.4 }}>
+                    <ViewQuiltIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={'Grid'} />
+                </ListItemButton>
+              </ListItem>
+              <Divider />
+              <ListItem disablePadding>
+                <ListItemButton
+                  component={MyNavLink}
+                  to="/date-time"
+                  activeClassName="Mui-selected"
+                  exact
+                >
+                  <ListItemIcon sx={{ marginLeft: 0.4 }}>
+                    <DateRangeIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={'Grid'} />
+                </ListItemButton>
+              </ListItem>
+              <Divider />
             </List>
           </Drawer>
           <Routes>
             <Route path="/" element={<WeatherPage />} />
             <Route path="/bmi" element={<BmiPage />} />
+            <Route path="/grid-learn" element={<GridLearnPage />} />
+            <Route path="/date-time" element={<DateTimePage />} />
           </Routes>
         </Box>
       </ThemeProvider>

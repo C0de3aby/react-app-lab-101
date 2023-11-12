@@ -60,137 +60,90 @@ const WeatherPage: React.FC<any> = () => {
     <>
       <Box
         sx={{
-          flexGrow: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-          // backgroundColor: '#F00000',
+          height: '100vh',
+          width: '100vh',
+          padding: '20px',
         }}
       >
-        <Box
+        <TextField
+          id="outlined-select-currency"
+          select
+          label="Select"
+          value={selectedCity}
+          helperText="Please select your city"
+          onChange={handleCityChange}
           sx={{
-            display: 'grid',
-            alignContent: 'center',
-            placeItems: 'center',
-            minHeight: '94vh',
+            width: 310,
+            marginBottom: '20px',
           }}
         >
-          <TextField
-            id="outlined-select-currency"
-            select
-            label="Select"
-            value={selectedCity}
-            helperText="Please select your city"
-            onChange={handleCityChange}
+          {cityList.map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
+            </MenuItem>
+          ))}
+        </TextField>
+
+        <Card
+          sx={{
+            bgcolor: 'white',
+            width: 310,
+            height: 550,
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: '#F5F5F5',
+            borderRadius: 4,
+          }}
+        >
+          <CardContent
             sx={{
-              width: 400,
-              marginBottom: '20px',
-            }}
-          >
-            {cityList.map((option) => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.label}
-              </MenuItem>
-            ))}
-          </TextField>
-          <Card
-            sx={{
-              bgcolor: 'white',
-              minWidth: 400,
-              maxWidth: 400,
-              minHeight: 550,
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
-              backgroundColor: '#F5F5F5',
-              borderRadius: 4,
             }}
           >
-            <CardContent
+            <Stack
               sx={{
-                display: 'flex',
+                height: '100vh',
+                width: '100vh',
                 justifyContent: 'center',
                 alignItems: 'center',
               }}
             >
-              <Stack
-                sx={{
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  minWidth: 400,
-                }}
-              >
-                {selectedCity ? (
-                  weatherData ? (
-                    <>
-                      <Typography
-                        sx={{
-                          fontSize: 40,
-                          fontWeight: 'Bold',
-                        }}
-                        color="GrayText"
-                      >
-                        {weatherData.name}
-                      </Typography>
-                      <br />
-                      <Avatar
-                        sx={{
-                          bgcolor: red[400],
-                          width: '10vh',
-                          height: '10vh',
-                        }}
-                        src={`https://openweathermap.org/img/wn/${weatherData.weather.map(
-                          (weather) => weather.icon,
-                        )}@2x.png`}
-                      />
-                      <br />
-                      <Typography
-                        sx={{
-                          fontSize: 28,
-                          fontWeight: 'Normal',
-                        }}
-                        color="GrayText"
-                      >
-                        {weatherData.weather.map((weather) => weather.main)}
-                      </Typography>
-                      <Typography
-                        sx={{
-                          fontSize: 20,
-                          fontWeight: 'Normal',
-                        }}
-                        color="GrayText"
-                      >
-                        {weatherData.weather.map((weather) => weather.description)}
-                      </Typography>
-                      <br />
-                      <Typography
-                        sx={{
-                          fontSize: 20,
-                          fontWeight: 'Normal',
-                        }}
-                        color="GrayText"
-                      >
-                        Current {weatherData.main.temp} °C
-                      </Typography>
-                      <Typography
-                        sx={{
-                          fontSize: 20,
-                          fontWeight: 'Normal',
-                        }}
-                        color="GrayText"
-                      >
-                        Min {weatherData.main.temp_min} °C
-                      </Typography>
-                      <Typography
-                        sx={{
-                          fontSize: 20,
-                          fontWeight: 'Normal',
-                        }}
-                        color="GrayText"
-                      >
-                        Max {weatherData.main.temp_max} °C
-                      </Typography>
-                    </>
-                  ) : (
+              {selectedCity ? (
+                weatherData ? (
+                  <>
+                    <Typography
+                      sx={{
+                        fontSize: 40,
+                        fontWeight: 'Bold',
+                      }}
+                      color="GrayText"
+                    >
+                      {weatherData.name}
+                    </Typography>
+                    <br />
+                    <Avatar
+                      sx={{
+                        bgcolor: red[400],
+                        width: '10vh',
+                        height: '10vh',
+                      }}
+                      src={`https://openweathermap.org/img/wn/${weatherData.weather.map(
+                        (weather) => weather.icon,
+                      )}@2x.png`}
+                    />
+                    <br />
+                    <Typography
+                      sx={{
+                        fontSize: 28,
+                        fontWeight: 'Normal',
+                      }}
+                      color="GrayText"
+                    >
+                      {weatherData.weather.map((weather) => weather.main)}
+                    </Typography>
                     <Typography
                       sx={{
                         fontSize: 20,
@@ -198,16 +151,54 @@ const WeatherPage: React.FC<any> = () => {
                       }}
                       color="GrayText"
                     >
-                      Loading...
+                      {weatherData.weather.map((weather) => weather.description)}
                     </Typography>
-                  )
+                    <br />
+                    <Typography
+                      sx={{
+                        fontSize: 20,
+                        fontWeight: 'Normal',
+                      }}
+                      color="GrayText"
+                    >
+                      Current {weatherData.main.temp} °C
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontSize: 20,
+                        fontWeight: 'Normal',
+                      }}
+                      color="GrayText"
+                    >
+                      Min {weatherData.main.temp_min} °C
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontSize: 20,
+                        fontWeight: 'Normal',
+                      }}
+                      color="GrayText"
+                    >
+                      Max {weatherData.main.temp_max} °C
+                    </Typography>
+                  </>
                 ) : (
-                  ''
-                )}
-              </Stack>
-            </CardContent>
-          </Card>
-        </Box>
+                  <Typography
+                    sx={{
+                      fontSize: 20,
+                      fontWeight: 'Normal',
+                    }}
+                    color="GrayText"
+                  >
+                    Loading...
+                  </Typography>
+                )
+              ) : (
+                ''
+              )}
+            </Stack>
+          </CardContent>
+        </Card>
       </Box>
     </>
   );
