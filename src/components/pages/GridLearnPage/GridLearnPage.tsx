@@ -39,7 +39,7 @@ const GridLearnPage: React.FC<any> = () => {
         </Box>
         <Divider />
         <Box sx={{ flexGrow: 1, mt: 2, mb: 2 }}>
-          <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 5, md: 10 }}>
+          <Grid container columns={12} rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
             <Grid xs={6}>
               <Item>1</Item>
             </Grid>
